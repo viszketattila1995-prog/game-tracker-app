@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: game-tracker-app
+  datasource:
+    url: jdbc:postgresql://localhost:5432/game_tracker
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
