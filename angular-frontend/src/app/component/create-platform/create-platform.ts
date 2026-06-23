@@ -2,7 +2,6 @@ import {Component, inject, signal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PlatformService} from '../../service/platform.service';
 import {Router} from '@angular/router';
-import {HttpErrorResponse} from '@angular/common/http';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -35,8 +34,17 @@ export class CreatePlatform {
         this.platformForm.reset()
         this.router.navigate(['/platform-list'])
       },
-      error: (err: HttpErrorResponse) => {
-        this.errorMessage.set(err.error.details)
+      error: (err) => {
+        if (err.error.fieldErrors) {
+          for (const validationError of err.error.fieldErrors) {
+            const formControl = this.platformForm.get(validationError.fieldError);
+            if (formControl) {
+              formControl.setErrors({serverError: validationError.message});
+            }
+          }
+        } else {
+          this.errorMessage.set(err.error.details);
+        }
       }
     })
   }

@@ -19,13 +19,13 @@ public class PlatformService {
 
     public Long createPlatform(PlatformCreateCommand command) {
 
-        if (platformRepository.existsByName(command.getName())) {
+        if (platformRepository.existsByName(command.getName().trim())) {
             throw new PlatformWithNameAlreadyExists("Platform already exists: " + command.getName());
         }
 
         Platform platform = new Platform();
-        platform.setName(command.getName());
-        platform.setManufacturer(command.getManufacturer());
+        platform.setName(command.getName().trim());
+        platform.setManufacturer(command.getManufacturer().trim());
         log.info("New platform created");
         return platformRepository.save(platform).getId();
     }
