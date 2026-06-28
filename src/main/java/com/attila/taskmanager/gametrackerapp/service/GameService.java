@@ -4,6 +4,7 @@ import com.attila.taskmanager.gametrackerapp.domain.Game;
 import com.attila.taskmanager.gametrackerapp.domain.Platform;
 import com.attila.taskmanager.gametrackerapp.domain.Status;
 import com.attila.taskmanager.gametrackerapp.dto.request.GameCreateCommand;
+import com.attila.taskmanager.gametrackerapp.dto.response.GameList;
 import com.attila.taskmanager.gametrackerapp.exception.InvalidStatusException;
 import com.attila.taskmanager.gametrackerapp.exception.PlatformWithIdNotExists;
 import com.attila.taskmanager.gametrackerapp.repository.GameRepository;
@@ -59,5 +60,22 @@ public class GameService {
     public List<Status> getStatus() {
 
         return Arrays.stream(Status.values()).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameList> getAllGames() {
+        List<Game> games = gameRepository.findAllByOrderByAddedAtDesc();
+
+        log.info("Games page requested");
+
+        return games.stream()
+                .map(game -> new GameList(
+                        game.getId(),
+                        game.getTitle(),
+                        game.getDeveloper(),
+                        game.getPlatform().getName(),
+                        game.getStatus().name(),
+                        game.getCoverUrl()))
+                .toList();
     }
 }

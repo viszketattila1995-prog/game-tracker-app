@@ -2,6 +2,7 @@ package com.attila.taskmanager.gametrackerapp.controller;
 
 import com.attila.taskmanager.gametrackerapp.domain.Status;
 import com.attila.taskmanager.gametrackerapp.dto.request.GameCreateCommand;
+import com.attila.taskmanager.gametrackerapp.dto.response.GameList;
 import com.attila.taskmanager.gametrackerapp.service.GameService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,12 @@ public class GameController {
         List<Status> statusData = gameService.getStatus();
 
         return ResponseEntity.ok(statusData);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GameList>> getGameList() {
+        List<GameList> gameList = gameService.getAllGames();
+
+        return ResponseEntity.ok(gameList);
     }
 }
