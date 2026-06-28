@@ -26,6 +26,8 @@ public class GameItem {
 
     private String coverUrl;
 
+    private String status;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime addedAt;
 }

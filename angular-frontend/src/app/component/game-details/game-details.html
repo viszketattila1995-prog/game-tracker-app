@@ -1,0 +1,25 @@
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="mt-5 card shadow" style="min-height: 20vh; width: 60%">
+    @if (gameDetails()?.coverUrl) {
+
+    <img [src]="gameDetails()?.coverUrl" class="card-img-top" alt="cover" style="height: 80%">
+    } @else {
+      <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
+           style="height: 400px">
+        No image
+      </div>
+    }
+    <div class="card-body">
+      <h3 class="card-title fw-bold">{{gameDetails()?.title}}</h3>
+      <p class="card-text fw-bold">{{gameDetails()?.developer}}</p>
+      <p class="card-text fw-bold">{{gameDetails()?.releaseYear}}</p>
+      <p class="card-text fw-bold">{{gameDetails()?.platformName}}</p>
+      <p class="card-text fw-bold">{{gameDetails()?.manufacturer}}</p>
+      <p class="card-text fw-bold">{{gameDetails()?.addedAt}}</p>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+      <span class="badge" [ngClass]="getStatusClass(gameDetails()!.status)">{{gameDetails()?.status}}</span>
+        <button class="btn btn-dark" [routerLink]="['/game-list']">Back</button>
+      </div>
+    </div>
+  </div>
+</div>

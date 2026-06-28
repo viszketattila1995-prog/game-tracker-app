@@ -1,24 +1,28 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { GameService } from '../../service/game.service';
-import { RouterLink } from '@angular/router';
-import { GameListModel } from '../../model/game-list.model';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { GameItemModel } from '../../model/game-item.model';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-game-list',
-  imports: [NgClass, RouterLink],
-  templateUrl: './game-list.html',
-  styleUrl: './game-list.css',
+  selector: 'app-game-details',
+  imports: [RouterLink, NgClass],
+  templateUrl: './game-details.html',
+  styleUrl: './game-details.css',
 })
-export class GameList implements OnInit {
+export class GameDetails implements OnInit {
   private gameService = inject(GameService);
 
-  gameList = signal<GameListModel[] | undefined>(undefined);
+  private route = inject(ActivatedRoute);
+
+  gameDetails = signal<GameItemModel | undefined>(undefined);
 
   ngOnInit(): void {
-    this.gameService.getAllGames().subscribe({
+    const id: number = +this.route.snapshot.paramMap.get('id')!;
+
+    this.gameService.getGameById(id).subscribe({
       next: (data) => {
-        this.gameList.set(data);
+        this.gameDetails.set(data);
       },
     });
   }

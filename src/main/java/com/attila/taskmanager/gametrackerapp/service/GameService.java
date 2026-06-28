@@ -96,6 +96,7 @@ public class GameService {
                 game.getPlatform().getName(),
                 game.getPlatform().getManufacturer(),
                 game.getCoverUrl(),
+                game.getStatus().name(),
                 game.getAddedAt()
         );
     }
