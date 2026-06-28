@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 @Data
 @AllArgsConstructor
@@ -30,5 +31,6 @@ public class GameCreateCommand {
     @NotBlank(message = "Status cannot be blank")
     private String status;
 
+    @URL(message = "Url must be valid")
     private String coverUrl;
 }

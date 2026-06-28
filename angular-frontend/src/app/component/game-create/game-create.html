@@ -1,0 +1,96 @@
+<div class="mt-5 d-flex justify-content-start">
+  @if (errorMessage()) {
+    <div class="alert alert-danger mx-auto" style="max-width: 80%">{{ errorMessage() }}</div>
+  }
+</div>
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="mt-5 card shadow" style="min-height: 20vh; width: 60%">
+    <h3 class="mt-3 d-flex justify-content-center">Create New Game</h3>
+
+    <form [formGroup]="gameForm" (ngSubmit)="createGame()">
+      <div class="mt-3 mx-auto text-center" style="max-width: 80%">
+        <label for="title" class="form-label fw-bold">Game Title: </label>
+        <input type="text" class="form-control" formControlName="title"
+               [ngClass]="{'is-invalid': gameForm.get('title')?.invalid && gameForm.get('title')?.touched && !gameForm.get('title')?.errors?.['serverError']}">
+
+        @if (gameForm.get('title')?.invalid && gameForm.get('title')?.touched && !gameForm.get('title')?.errors?.['serverError']) {
+          <small class="text-danger">Please enter a title</small>
+        }
+        @if (gameForm.get('title')?.errors?.['serverError']) {
+          <small class="text-danger">{{ gameForm.get('title')?.errors?.['serverError'] }}</small>
+        }
+      </div>
+
+      <div class="mt-3 mx-auto text-center" style="max-width: 80%">
+        <label for="developer" class="form-label fw-bold">Developers: </label>
+        <input type="text" class="form-control" formControlName="developer"
+               [ngClass]="{'is-invalid': gameForm.get('developer')?.invalid && gameForm.get('developer')?.touched && !gameForm.get('developer')?.errors?.['serverError']}">
+
+        @if (gameForm.get('developer')?.invalid && gameForm.get('developer')?.touched && !gameForm.get('developer')?.errors?.['serverError']) {
+          <small class="text-danger">Please enter a developer</small>
+        }
+        @if (gameForm.get('developer')?.errors?.['serverError']) {
+          <small class="text-danger">{{ gameForm.get('developer')?.errors?.['serverError'] }}</small>
+        }
+      </div>
+
+      <div class="mt-3 mx-auto text-center" style="max-width: 80%">
+        <label for="releaseYear" class="form-label fw-bold">Release Year: </label>
+        <input type="text" class="form-control" formControlName="releaseYear"
+               [ngClass]="{'is-invalid': gameForm.get('releaseYear')?.invalid && gameForm.get('releaseYear')?.touched && !gameForm.get('releaseYear')?.errors?.['serverError']}">
+
+        @if (gameForm.get('releaseYear')?.invalid && gameForm.get('releaseYear')?.touched && !gameForm.get('releaseYear')?.errors?.['serverError']) {
+          <small class="text-danger">Please enter a release year between 1970 and 2030</small>
+        }
+        @if (gameForm.get('releaseYear')?.errors?.['serverError']) {
+          <small class="text-danger">{{ gameForm.get('releaseYear')?.errors?.['serverError'] }}</small>
+        }
+      </div>
+
+      <div class="mt-3 mx-auto text-center" style="max-width: 80%">
+        <label for="platformId" class="form-label fw-bold">Choose a platform: </label>
+        <select class="form-select" formControlName="platformId">
+          <option value="" disabled>--- Chose a Platform ---</option>
+          @for (platform of platformDropdown(); track platform.id) {
+            <option [value]="platform.id">{{ platform.manufacturer }} - {{ platform.name }}</option>
+          }
+        </select>
+        @if (gameForm.get('platformId')?.invalid && gameForm.get('platformId')?.touched && !gameForm.get('platformId')?.errors?.['serverError']) {
+          <small class="text-danger">Please choose a platform</small>
+        }
+        @if (gameForm.get('platformId')?.errors?.['serverError']) {
+          <small class="text-danger">{{ gameForm.get('platformId')?.errors?.['serverError'] }}</small>
+        }
+      </div>
+
+      <div class="mt-3 mx-auto text-center" style="max-width: 80%">
+        <label for="status" class="form-label fw-bold">Choose Status: </label>
+        <br>
+        @for (status of status(); track status) {
+          <input type="radio" formControlName="status" [value]="status"> {{ status | titlecase }}
+        }
+        @if (gameForm.get('status')?.invalid && gameForm.get('status')?.touched && !gameForm.get('status')?.errors?.['serverError']) {
+          <small class="text-danger">Please choose a status</small>
+        }
+        @if (gameForm.get('status')?.errors?.['serverError']) {
+          <small class="text-danger">{{ gameForm.get('status')?.errors?.['serverError'] }}</small>
+        }
+
+      </div>
+
+      <div class="mt-3 mx-auto text-center" style="max-width: 80%">
+        <label for="coverUrl" class="form-label fw-bold">Cover URL: </label>
+        <input type="text" class="form-control" formControlName="coverUrl">
+
+        @if (gameForm.get('coverUrl')?.errors?.['serverError']) {
+          <small class="text-danger">{{ gameForm.get('coverUrl')?.errors?.['serverError'] }}</small>
+        }
+      </div>
+
+      <div class="mt-3 ps-5">
+        <button class="btn btn-success" [disabled]="gameForm.invalid">Create Game</button>
+      </div>
+    </form>
+    <div class="m-3"></div>
+  </div>
+</div>

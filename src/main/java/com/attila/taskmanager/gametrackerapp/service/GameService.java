@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @Transactional
@@ -29,21 +31,21 @@ public class GameService {
         Platform platform = platformRepository.findById(command.getPlatformId())
                 .orElseThrow(() -> new PlatformWithIdNotExists("Platform with this id doesn't exists: " + command.getPlatformId()));
 
-       Status status;
+        Status status;
 
-       try {
-           status = Status.valueOf(command.getStatus());
-       } catch (IllegalArgumentException exception) {
+        try {
+            status = Status.valueOf(command.getStatus());
+        } catch (IllegalArgumentException exception) {
             throw new InvalidStatusException("Invalid status: " + command.getStatus());
-       }
+        }
 
         Game game = new Game();
 
-        game.setTitle(command.getTitle());
-        game.setDeveloper(command.getDeveloper());
+        game.setTitle(command.getTitle().strip());
+        game.setDeveloper(command.getDeveloper().strip());
         game.setReleaseYear(command.getReleaseYear());
         game.setStatus(status);
-        game.setCoverUrl(command.getCoverUrl());
+        game.setCoverUrl(command.getCoverUrl().strip());
         game.setPlatform(platform);
         game.setAddedAt(LocalDateTime.now());
 
@@ -51,5 +53,11 @@ public class GameService {
 
         return gameRepository.save(game).getId();
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<Status> getStatus() {
+
+        return Arrays.stream(Status.values()).toList();
     }
 }
