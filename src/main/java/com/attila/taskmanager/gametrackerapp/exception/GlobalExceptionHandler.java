@@ -26,4 +26,16 @@ public class GlobalExceptionHandler {
     public ApiError handlePlatformAlreadyExistsException(PlatformWithNameAlreadyExists ex) {
         return new ApiError("PLATFORM_ALREADY_EXISTS", ex.getMessage(), "A platform with the same name already exists");
     }
+
+    @ExceptionHandler(PlatformWithIdNotExists.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handlePlatformWithIdNotExistsException(PlatformWithIdNotExists ex) {
+        return new ApiError("PLATFORM_WITH_ID_NOT_EXISTS", ex.getMessage(), "Platform with this id doesn't exists");
+    }
+
+    @ExceptionHandler(InvalidStatusException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleInvalidStatusException(InvalidStatusException ex) {
+        return new ApiError("INVALID_STATUS", ex.getMessage(), "Status with this name doesn't exists");
+    }
 }
