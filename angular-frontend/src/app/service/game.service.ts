@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GameCreateCommandModel } from '../model/game-create-command.model';
+import { GameListModel } from '../model/game-list.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +17,9 @@ export class GameService {
 
   public getStatus() {
     return this.httpClient.get<string[]>(`${this.BASE_URL}/status`);
+  }
+
+  public getAllGames() {
+    return this.httpClient.get<GameListModel[]>(this.BASE_URL)
   }
 }
