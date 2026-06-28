@@ -4,7 +4,9 @@ import com.attila.taskmanager.gametrackerapp.domain.Game;
 import com.attila.taskmanager.gametrackerapp.domain.Platform;
 import com.attila.taskmanager.gametrackerapp.domain.Status;
 import com.attila.taskmanager.gametrackerapp.dto.request.GameCreateCommand;
+import com.attila.taskmanager.gametrackerapp.dto.response.GameItem;
 import com.attila.taskmanager.gametrackerapp.dto.response.GameList;
+import com.attila.taskmanager.gametrackerapp.exception.GameNotFoundException;
 import com.attila.taskmanager.gametrackerapp.exception.InvalidStatusException;
 import com.attila.taskmanager.gametrackerapp.exception.PlatformWithIdNotExists;
 import com.attila.taskmanager.gametrackerapp.repository.GameRepository;
@@ -77,5 +79,24 @@ public class GameService {
                         game.getStatus().name(),
                         game.getCoverUrl()))
                 .toList();
+    }
+
+    public GameItem getGameById(Long id) {
+
+        Game game = gameRepository.findById(id)
+                .orElseThrow(() -> new GameNotFoundException("Game with this id doesn't exists: " + id));
+
+        log.info("Game details requested");
+
+        return new GameItem(
+                game.getId(),
+                game.getTitle(),
+                game.getDeveloper(),
+                game.getReleaseYear(),
+                game.getPlatform().getName(),
+                game.getPlatform().getManufacturer(),
+                game.getCoverUrl(),
+                game.getAddedAt()
+        );
     }
 }

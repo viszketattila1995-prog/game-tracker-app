@@ -38,4 +38,10 @@ public class GlobalExceptionHandler {
     public ApiError handleInvalidStatusException(InvalidStatusException ex) {
         return new ApiError("INVALID_STATUS", ex.getMessage(), "Status with this name doesn't exists");
     }
+
+    @ExceptionHandler(GameNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handleGameNotFoundException(GameNotFoundException ex) {
+        return new ApiError("GAME_NOT_FOUND", ex.getMessage(), "Game with id doesn't exists");
+    }
 }
