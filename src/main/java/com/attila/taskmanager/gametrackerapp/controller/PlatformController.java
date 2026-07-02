@@ -2,6 +2,7 @@ package com.attila.taskmanager.gametrackerapp.controller;
 
 import com.attila.taskmanager.gametrackerapp.dto.request.PlatformCreateCommand;
 import com.attila.taskmanager.gametrackerapp.dto.response.PlatformDropdownResponse;
+import com.attila.taskmanager.gametrackerapp.dto.response.PlatformSummary;
 import com.attila.taskmanager.gametrackerapp.service.PlatformService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,13 @@ public class PlatformController {
         List<PlatformDropdownResponse> response = platformService.getPlatforms();
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<List<PlatformSummary>> platformSummary() {
+        List<PlatformSummary> platformSummaries = platformService.platformSummary();
+
+        return ResponseEntity.ok(platformSummaries);
     }
 
 }

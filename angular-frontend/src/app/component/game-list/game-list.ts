@@ -13,7 +13,7 @@ import { NgClass } from '@angular/common';
 export class GameList implements OnInit {
   private gameService = inject(GameService);
 
-  gameList = signal<GameListModel[] | undefined>(undefined);
+  gameList = signal<GameListModel[]>([]);
 
   ngOnInit(): void {
     this.gameService.getAllGames().subscribe({

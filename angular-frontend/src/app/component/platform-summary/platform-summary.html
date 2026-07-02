@@ -1,0 +1,26 @@
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="mt-5 card shadow" style="width: 60%">
+    <div class="mt-3">
+    </div>
+    <table class="table table-striped-columns table-hover">
+      <thead>
+      <tr>
+        <th>Platform Name:</th>
+        <th>Manufacturer:</th>
+        <th>All games:</th>
+        <th>Completed:</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (platform of platformSum(); track platform.id) {
+          <tr>
+            <td>{{ platform.platformName }}</td>
+            <td>{{ platform.manufacturer }}</td>
+            <td>{{ platform.sumOfGames }}</td>
+            <td>{{ platform.sumOfCompleted }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
